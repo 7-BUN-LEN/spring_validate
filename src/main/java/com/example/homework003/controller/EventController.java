@@ -37,16 +37,16 @@ public class EventController {
         );
     }
     @PostMapping
-    public ResponseEntity<APIResponse<EventResponse>>
-    insert(@RequestBody @Valid EventRequest eventRequest){
-        APIResponse<EventResponse> response = APIResponse.<EventResponse>builder()
-                .message("The Event has been Successfully Insert.")
-                .payload(eventService.insert(eventRequest))
-                .status(HttpStatus.OK)
-                .dateTime(LocalDateTime.now())
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
+        public ResponseEntity<APIResponse<EventResponse>>
+        insert(@RequestBody @Valid EventRequest eventRequest){
+            APIResponse<EventResponse> response = APIResponse.<EventResponse>builder()
+                    .message("The Event has been Successfully Insert.")
+                    .payload(eventService.insert(eventRequest))
+                    .status(HttpStatus.OK)
+                    .dateTime(LocalDateTime.now())
+                    .build();
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
 
     @GetMapping("/{id}")
     public ResponseEntity<APIResponse<EventResponse>>
