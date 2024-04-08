@@ -22,6 +22,7 @@ public class EventController {
 
     private final EventService eventService;
 
+
     @GetMapping
     public ResponseEntity<APIResponse<List<EventResponse>>>
     findAllEvents(@RequestParam (defaultValue = "1") @Positive Integer offset,
@@ -48,38 +49,4 @@ public class EventController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<APIResponse<EventResponse>>
-    findEventById(@PathVariable @Positive Integer id){
-        APIResponse<EventResponse> response = APIResponse.<EventResponse>builder()
-                .message("The Event has been Successfully found.")
-                .payload(eventService.findEventById(id))
-                .status(HttpStatus.OK)
-                .dateTime(LocalDateTime.now())
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<APIResponse<EventResponse>>
-    updateEventById(@PathVariable Integer id, @RequestBody @Valid EventRequest eventRequest){
-        APIResponse<EventResponse> response = APIResponse.<EventResponse>builder()
-                .message("The Event has been Successfully updated.")
-                .payload(eventService.updateEventById(id,eventRequest))
-                .status(HttpStatus.OK)
-                .dateTime(LocalDateTime.now())
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<APIResponse<String>> removeEventById(@PathVariable Integer id) {
-        APIResponse<String> response = APIResponse.<String>builder()
-                .message("The Event has been Successfully deleted.")
-                .payload(eventService.removeEventById(id))
-                .status(HttpStatus.OK)
-                .dateTime(LocalDateTime.now())
-                .build();
-        return ResponseEntity.ok(response);
-    }
 }
