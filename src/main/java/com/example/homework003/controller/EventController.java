@@ -56,4 +56,31 @@ public class EventController {
                 .build();
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping
+    public ResponseEntity<APIResponse<List<EventResponse>>>
+    findAllEvents(@RequestParam (defaultValue = "1") @Positive Integer offset,
+                  @RequestParam(defaultValue = "5") @Positive Integer limit){
+        System.out.println(eventService.findAllEvents(offset, limit));
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new APIResponse<>(
+                        "All Events have been successfully fetch.",
+                        eventService.findAllEvents(offset, limit),
+                        HttpStatus.OK,
+                        LocalDateTime.now()
+                )
+        );
+    }
+    @PostMapping
+    public ResponseEntity<APIResponse<EventResponse>>
+    insert(@RequestBody @Valid EventRequest eventRequest){
+        APIResponse<EventResponse> response = APIResponse.<EventResponse>builder()
+                .message("The Event has been Successfully Insert.")
+                .payload(eventService.insert(eventRequest))
+                .status(HttpStatus.OK)
+                .dateTime(LocalDateTime.now())
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 }
